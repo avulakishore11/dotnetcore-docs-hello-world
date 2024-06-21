@@ -8,8 +8,8 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
-    restoreArguments: '--configfile $(Build.SourcesDirectory)/NuGet.config'  # Update as needed
-    feedsToUse: 'select'
+    projects: '**/*.csproj'
+    includeNuGetOrg: false
 
 - task: DotNetCoreCLI@2
   inputs:
