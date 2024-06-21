@@ -8,7 +8,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
-    restoreArguments: '--configuration $(build.configuration)'
+    restoreArguments: '--configfile $(Build.SourcesDirectory)/NuGet.config'  # Update as needed
     feedsToUse: 'select'
 
 - task: DotNetCoreCLI@2
