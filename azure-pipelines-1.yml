@@ -7,7 +7,7 @@ trigger:
 - main
 
 pool:
-  vmImage: 'Windows 2019 '
+  name: 'pool2'
 stages:
   - stage: 
     jobs:
