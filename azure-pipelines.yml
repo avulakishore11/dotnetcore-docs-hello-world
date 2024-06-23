@@ -4,21 +4,27 @@ trigger:
 pool:
   name: 'pool1'
 
-steps:
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'restore'
-    projects: 'devopswebapp.csproj'
-    includeNuGetOrg: false
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    steps:
+    - task: UseDotNet@2
+      inputs:
+        packageType: 'sdk'
+        version: '5.x.x'  # Specify the required .NET SDK version
+        installationPath: $(Agent.ToolsDirectory)/dotnet
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: 'devopswebapp.csproj'
-    arguments: '--configuration $(build.configuration)'
-  
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'test'
-    projects: 'devopswebapp.csproj'
-    arguments: '--configuration $(build.configuration)'
+    - script: |
+        dotnet build --configuration Release
+      displayName: 'Build Project'
+
+    - script: |
+        dotnet test --configuration Release
+      displayName: 'Run Tests'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
