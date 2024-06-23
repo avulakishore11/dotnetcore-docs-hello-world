@@ -19,17 +19,17 @@ stages:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
-        projects: 'devopswebapp.csproj'
+        projects: '**/devopswebapp.csproj'
         includeNuGetOrg: false
     - task: DotNetCoreCLI@2
       inputs:
         command: 'build'
-        projects: 'devopswebapp.csproj'
+        projects: '**/devopswebapp.csproj'
     
     - task: DotNetCoreCLI@2
       inputs:
         command: 'test'
-        projects: 'devopswebapp.csproj'
-        publishTestResults: false
+        projects: '**/devopswebapp.csproj'
+        publishTestResults: true
     
     
