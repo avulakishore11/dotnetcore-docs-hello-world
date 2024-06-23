@@ -2,18 +2,14 @@ trigger:
 - main
 
 pool:
-  vmImage: 'windows-latest'
+  name: 'pool1'
 
 stages:
 - stage: Build
   jobs:
   - job: Build
     steps:
-    - task: UseDotNet@2
-      inputs:
-        packageType: 'sdk'
-        version: '5.x'  # Specify the required .NET SDK version
-        installationPath: $(Agent.ToolsDirectory)/dotnet
+    
 
     
     - task: DotNetCoreCLI@2
