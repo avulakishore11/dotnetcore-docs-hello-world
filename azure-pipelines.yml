@@ -15,16 +15,21 @@ stages:
         version: '5.x'  # Specify the required .NET SDK version
         installationPath: $(Agent.ToolsDirectory)/dotnet
 
-    - script: |
-        dotnet build --configuration Release
-      displayName: 'Build Project'
-
-    - script: |
-        dotnet test --configuration Release
-      displayName: 'Run Tests'
-
-    - task: PublishBuildArtifacts@1
+    
+    - task: DotNetCoreCLI@2
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
-        publishLocation: 'Container'
+        command: 'restore'
+        projects: 'devopswebapp.csproj'
+        includeNuGetOrg: false
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: 'devopswebapp.csproj'
+    
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'test'
+        projects: 'devopswebapp.csproj'
+        publishTestResults: false
+    
+    
