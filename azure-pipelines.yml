@@ -8,17 +8,17 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
-    projects: '**/*.csproj'
+    projects: 'devopswebapp.csproj'
     includeNuGetOrg: false
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: '**/*.csproj'
+    projects: 'devopswebapp.csproj'
     arguments: '--configuration $(build.configuration)'
   
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
-    projects: '**/*.csproj'
+    projects: 'devopswebapp.csproj'
     arguments: '--configuration $(build.configuration)'
