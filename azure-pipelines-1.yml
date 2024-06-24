@@ -8,20 +8,33 @@ trigger:
 
 pool:
   name: 'pool2'
+
+variables:
+  buildconfiguration: 'Debug'
+
 stages:
   - stage: 
     jobs:
     - job: 
       steps:
       - task: UseDotNet@2
+        displayName: 'DotNet installed'
         inputs:
           packageType: 'sdk'
-          version: '6.x'
+          version: '8.x'
       
       - task: DotNetCoreCLI@2
+        displayName: 'restored'
         inputs:
           command: 'restore'
           projects: '**/*.csproj'
           feedsToUse: 'select'
+          arguments: '-C $(buildconfiguration)'
+      
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'build'
+          projects: '**/*.csproj'
+          arguments: '-C $(buildconfiguration)'
 
 
